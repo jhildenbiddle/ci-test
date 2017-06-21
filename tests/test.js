@@ -1,13 +1,10 @@
-fixture `Example page`
-    .page `https://devexpress.github.io/testcafe/example`;
+import { Selector } from 'testcafe';
 
-test('Emulate user actions and perform a verification', async t => {
-    await t
-        .setNativeDialogHandler(() => true)
-        .click('#populate')
-        .click('#submit-button');
+fixture `Index Page`
+    .page `../index.html`;
 
-    const location = await t.eval(() => window.location);
+test('Check for existence of text', async t => {
+    const paragraph = await new Selector('body > p');
 
-    await t.expect(location.pathname).eql('/testcafe/example/thank-you.FAIL.html');
+    await t.expect(paragraph.textContent).eql('Foobar');
 });

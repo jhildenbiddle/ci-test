@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "export SAUCE_JOB=\"ci-test\" && testcafe \"saucelabs:Internet Explorer@9.0:Windows 7,saucelabs:Safari@6.0:OS X 10.8\" tests/"
+    "test": "testcafe \"chrome:headless\" tests/",
+    "test:remote": "export SAUCE_JOB=\"ci-test\" && testcafe \"saucelabs:Internet Explorer@9.0:Windows 7,saucelabs:Safari@6.0:OS X 10.8\" tests/"
   },
   "repository": {
     "type": "git",
