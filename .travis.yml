@@ -4,5 +4,7 @@ node_js: "stable"
 before_install:
   - stty cols 80
 
+script: "test:remote"
+
 notifications:
     email: false
