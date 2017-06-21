@@ -9,5 +9,5 @@ test('Emulate user actions and perform a verification', async t => {
 
     const location = await t.eval(() => window.location);
 
-    await t.expect(location.pathname).eql('/testcafe/example/thank-you.html');
+    await t.expect(location.pathname).eql('/testcafe/example/thank-you.FAIL.html');
 });
