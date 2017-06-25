@@ -1,4 +1,4 @@
 # ci-test
 
-[![Build Status](https://travis-ci.org/jhildenbiddle/ci-test.svg?branch=master)](https://travis-ci.org/jhildenbiddle/ci-test)
-[![codecov](https://codecov.io/gh/jhildenbiddle/ci-test/branch/master/graph/badge.svg)](https://codecov.io/gh/jhildenbiddle/ci-test)
+[![Build Status](https://img.shields.io/travis/jhildenbiddle/ci-test.svg?style=flat-square)](https://travis-ci.org/jhildenbiddle/ci-test)
+[![Codecov](https://img.shields.io/codecov/c/github/codecov/example-python.svg?style=flat-square)](https://codecov.io/gh/jhildenbiddle/ci-test)
