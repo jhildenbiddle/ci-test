@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "testcafe \"chrome:headless\" tests/",
-    "test:remote": "export SAUCE_JOB=\"ci-test\" && testcafe \"saucelabs:Internet Explorer@9.0:Windows 7,saucelabs:Safari@6.0:OS X 10.8\" tests/"
+    "test:cafe": "testcafe \"chrome:headless\" tests/testcafe/",
+    "test:cafe-remote": "export SAUCE_JOB=\"ci-test (testcafe)\" && testcafe \"saucelabs:Internet Explorer@9.0:Windows 7,saucelabs:Safari@6.0:OS X 10.8\" tests/testcafe/",
+    "test:jest": "jest tests/jest --coverage",
+    "test:karma": "karma start --single-run",
+    "test:karma-remote": "karma start --single-run --remote"
   },
   "repository": {
     "type": "git",
@@ -18,7 +21,32 @@
   },
   "homepage": "https://github.com/jhildenbiddle/ci-test#readme",
   "devDependencies": {
+    "babel-core": "^6.25.0",
+    "babel-jest": "^20.0.3",
+    "babel-loader": "^7.1.0",
+    "babel-plugin-istanbul": "^4.1.4",
+    "babel-preset-env": "^1.5.2",
+    "jest": "^20.0.4",
+    "karma": "^1.7.0",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^2.1.1",
+    "karma-coverage": "^1.1.1",
+    "karma-mocha": "^1.3.0",
+    "karma-mocha-reporter": "^2.2.3",
+    "karma-sauce-launcher": "^1.1.0",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-webpack": "^2.0.3",
+    "mocha": "^3.4.2",
+    "rimraf": "^2.6.1",
     "testcafe": "^0.16.0",
-    "testcafe-browser-provider-saucelabs": "^1.3.0"
+    "testcafe-browser-provider-saucelabs": "^1.3.0",
+    "webpack": "^2.0.0"
+  },
+  "jest": {
+    "coverageDirectory": "<rootDir>/coverage/jest",
+    "coverageReporters": [
+      "lcov",
+      "text"
+    ]
   }
 }

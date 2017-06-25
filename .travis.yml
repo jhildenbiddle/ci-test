@@ -1,10 +1,14 @@
 language: node_js
 node_js: "stable"
 
+notifications:
+  email: false
+
 before_install:
   - stty cols 80
 
-script: "npm run test:remote"
+script: "npm run test:jest"
 
-notifications:
-    email: false
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash) -e TRAVIS_NODE_VERSION
