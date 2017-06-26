@@ -3,9 +3,6 @@
 [![Build Status](https://img.shields.io/travis/jhildenbiddle/ci-test.svg?style=flat-square)](https://travis-ci.org/jhildenbiddle/ci-test)
 [![Codecov](https://img.shields.io/codecov/c/github/jhildenbiddle/ci-test.svg?style=flat-square)](https://codecov.io/gh/jhildenbiddle/ci-test)
 
-
-
-
 ## Description
 
 Sample code used for evaluating JavaScript testing frameworks:
@@ -13,9 +10,6 @@ Sample code used for evaluating JavaScript testing frameworks:
 *   [Jest](https://facebook.github.io/jest/)
 *   [Karma](https://karma-runner.github.io) + [Mocha](https://mochajs.org/) + [Chai](http://chaijs.com/) + [Istanbul](https://istanbul.js.org/)
 *   [TestCafé](http://devexpress.github.io/testcafe/)
-
-
-
 
 ## Goals
 
@@ -31,9 +25,6 @@ Sample code used for evaluating JavaScript testing frameworks:
 
     *   Continuous Integration using [Travis CI](https://travis-ci.org/)
     *   Code coverage history and statistics using [Codecov](https://codecov.io/)
-
-
-
 
 ### Quickstart
 
@@ -53,9 +44,6 @@ npm run test:karma
 npm run test:cafe-remote
 npm run test:karma-remote
 ```
-
-
-
 
 ## Notes
 
