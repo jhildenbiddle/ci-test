@@ -100,7 +100,8 @@ const remoteConfig = Object.assign({}, localConfig, {
     get browsers() {
         return Object.keys(this.customLaunchers);
     },
-    reporters: ['mocha', 'saucelabs'],
+    // Add SauceLabs reporter
+    reporters: localConfig.reporters.push('saucelabs'),
     coverageReporter: {
         dir: 'coverage'
     },
