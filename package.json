@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:cafe": "testcafe \"chrome:headless\" tests/testcafe/",
-    "test:cafe-remote": "export SAUCE_JOB=\"ci-test (testcafe)\" && testcafe \"saucelabs:Internet Explorer@9.0:Windows 7,saucelabs:Safari@6.0:OS X 10.8\" tests/testcafe/",
-    "test:jest": "jest tests/jest --coverage",
-    "test:karma": "karma start --single-run",
-    "test:karma-remote": "karma start --single-run --remote"
+    "clean"            : "rimraf coverage/*",
+    "test:cafe"        : "npm run clean && testcafe \"chrome:headless\" tests/testcafe/",
+    "test:cafe-remote" : "npm run clean && export SAUCE_JOB=\"ci-test (testcafe)\" && testcafe \"saucelabs:Internet Explorer@9.0:Windows 7,saucelabs:Safari@6.0:OS X 10.8\" tests/testcafe/",
+    "test:jest"        : "npm run clean && jest tests/jest --coverage",
+    "test:karma"       : "npm run clean && karma start --single-run",
+    "test:karma-remote": "npm run clean && karma start --single-run --remote"
   },
   "repository": {
     "type": "git",
@@ -45,7 +46,6 @@
     "webpack": "^2.0.0"
   },
   "jest": {
-    "coverageDirectory": "<rootDir>/coverage/jest",
     "coverageReporters": [
       "lcov",
       "text"

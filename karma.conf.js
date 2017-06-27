@@ -46,7 +46,6 @@ const localConfig = {
     // Code coverage
     // https://www.npmjs.com/package/karma-coverage
     coverageReporter: {
-        dir: 'coverage/karma',
         reporters: [
             { type: 'html' },
             { type: 'lcovonly' },
@@ -101,10 +100,7 @@ const remoteConfig = Object.assign({}, localConfig, {
         return Object.keys(this.customLaunchers);
     },
     // Add SauceLabs reporter
-    reporters: localConfig.reporters.push('saucelabs'),
-    coverageReporter: {
-        dir: 'coverage'
-    },
+    reporters: ['mocha', 'coverage', 'saucelabs'],
     sauceLabs: {
         testName: `${pkg.name} (karma)`
     }
