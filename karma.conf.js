@@ -1,14 +1,27 @@
-const isRemote  = Boolean(process.argv.indexOf('--remote') > -1);
+const htmlFiles = './tests/fixtures/*.html';
+const jsonFiles = './tests/fixtures/*.json';
 const testFiles = './tests/karma/*.test.js';
 const pkg       = require('./package');
 
+
+// Local config
+// =============================================================================
 const localConfig = {
+    // Add browsers via Karma launchers
+    // https://www.npmjs.com/search?q=karma+launcher
     browsers: ['ChromeHeadless'],
-    frameworks: ['mocha', 'chai'],
-    files: [testFiles],
+    files: [
+        htmlFiles,
+        jsonFiles,
+        testFiles
+    ],
     preprocessors: {
+        [htmlFiles]: ['html2js'],
+        [jsonFiles]: ['json_fixtures'],
         [testFiles]: ['webpack', 'sourcemap'],
     },
+    frameworks: ['mocha', 'chai'],
+    reporters: ['mocha', 'coverage'],
     webpack: {
         devtool: 'inline-source-map',
         module: {
@@ -30,7 +43,8 @@ const localConfig = {
     webpackMiddleware: {
         stats: 'errors-only'
     },
-    reporters: ['mocha', 'coverage'],
+    // Code coverage
+    // https://www.npmjs.com/package/karma-coverage
     coverageReporter: {
         dir: 'coverage/karma',
         reporters: [
@@ -39,6 +53,17 @@ const localConfig = {
             { type: 'text-summary' }
         ]
     },
+    // HTML Fixtures
+    // https://www.npmjs.com/package/karma-html2js-preprocessor
+    html2JsPreprocessor: {
+        stripPrefix: 'tests/fixtures/'
+    },
+    // JSON Fixtures
+    // https://www.npmjs.com/package/karma-json-fixtures-preprocessor
+    jsonFixturesPreprocessor: {
+        stripPrefix: 'tests/fixtures/',
+        variableName: '__json__'
+    },
     port: 9876,
     colors: true,
     autoWatch: true,
@@ -46,7 +71,12 @@ const localConfig = {
     concurrency: Infinity
 }
 
+
+// Remote config
+// =============================================================================
 const remoteConfig = Object.assign({}, localConfig, {
+    // SauceLabs browers
+    // See https://saucelabs.com/platforms for complete list
     customLaunchers: {
         sl_chrome: {
             base: 'SauceLabs',
@@ -66,6 +96,7 @@ const remoteConfig = Object.assign({}, localConfig, {
             version: '11'
         }
     },
+    // Set browsers to all customLaunchers
     get browsers() {
         return Object.keys(this.customLaunchers);
     },
@@ -78,9 +109,13 @@ const remoteConfig = Object.assign({}, localConfig, {
     }
 });
 
-module.exports = function(config) {
-    const finalConfig = isRemote ? remoteConfig : localConfig;
 
-    finalConfig.logLevel = config.LOG_INFO;
-    config.set(finalConfig)
+// Export
+// =============================================================================
+module.exports = function(config) {
+    const isRemote   = Boolean(process.argv.indexOf('--remote') > -1);
+    const testConfig = isRemote ? remoteConfig : localConfig;
+
+    testConfig.logLevel = config.LOG_INFO;
+    config.set(testConfig)
 }

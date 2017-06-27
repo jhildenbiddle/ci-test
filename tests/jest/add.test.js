@@ -24,26 +24,27 @@ const loadFixture = async (filePath) => {
 
 // Tests
 // =============================================================================
-describe('Fixture (file)', () => {
+describe('add.js', () => {
+    it('should add numbers', () => {
+        expect(add(1, 2)).toBe(3);
+    });
+});
+
+describe('data.json', () => {
+    it('should contain numeric data', async () => {
+        const data = require('../fixtures/data.json');
+        const a    = data.a;
+        const b    = data.b;
+
+        expect(a + b).toBe(3);
+    });
+});
+
+describe('page.html', () => {
     it('should contain text "Hello World"', async () => {
         const fixture = await loadFixture('../fixtures/page.html');
 
         document.body.insertAdjacentHTML('beforeend', fixture);
         expect(document.querySelector('p').textContent).toBe('Hello World');
-    });
-});
-
-describe('Fixture (injected)', () => {
-    it('should contain text "Hello World"', () => {
-        const fixture = '<p>Hello World</p>';
-
-        document.body.insertAdjacentHTML('beforeend', fixture);
-        expect(document.querySelector('p').textContent).toBe('Hello World');
-    });
-});
-
-describe('add.js', () => {
-    it('should add numbers', () => {
-        expect(add(1, 2)).toBe(3);
     });
 });
