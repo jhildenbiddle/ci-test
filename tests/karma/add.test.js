@@ -1,19 +1,20 @@
 // Modules
 // =============================================================================
 import add from '../../src/add.js';
+import { expect } from 'chai';
 
 
 // Tests
 // =============================================================================
-describe('add.js', () => {
-    it('should add numbers', () => {
+describe('add.js', function() {
+    it('should add numbers', function() {
         expect(add(1, 2)).to.equal(3);
     });
 });
 
-describe('data.json', () => {
-    it('should contain numeric data', () => {
-        const data = window.__json__['data'];
+describe('data.json', function() {
+    it('should contain numeric data', function() {
+        const data = window.__json__.data;
         const a    = data.a;
         const b    = data.b;
 
@@ -21,8 +22,8 @@ describe('data.json', () => {
     });
 });
 
-describe('page.html', () => {
-    it('should contain text "Hello World"', () => {
+describe('page.html', function() {
+    it('should contain text "Hello World"', function() {
         const fixture = window.__html__['page.html'];
 
         document.body.insertAdjacentHTML('beforeend', fixture);

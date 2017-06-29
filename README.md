@@ -15,11 +15,12 @@ Sample code used for evaluating JavaScript testing frameworks:
 
 1.  A consistent baseline configuration for each framework:
 
-    *   A modern JavaScript environment (ES6+)
+    *   A modern JavaScript environment (ES6+ via [Babel](http://babeljs.io/))
     *   Local browser testing
-    *   Remote browser testing (SauceLabs)
+    *   Remote browser testing ([SauceLabs](https://saucelabs.com/))
     *   Test fixtures (HTML, JSON, etc.)
-    *   Code coverage reports
+    *   Code coverage ([Istanbul](https://istanbul.js.org/))
+    *   Code linting ([ESLint](http://eslint.org/))
 
 2.  Integration with common test-related services:
 
@@ -51,10 +52,10 @@ npm run test:karma-remote
 
     The sample code uses JavaScript's new [async](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) / [await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await) feature which requires Node 7.6 or above. The code also makes use of the [util.promisify()](https://nodejs.org/api/util.html#util_util_promisify_original) utility function introduced in Node 8.x, but a [polyfill is available](https://github.com/ljharb/util.promisify) for older versions.
 
-2.  **Install Chrome 59+ for "headless" browser testing**
+2. **Install Chrome 59+ for "headless" browser testing**
 
     Local tests are configured to use Chrome in "headless" mode by default. This requires Chrome 59 or above. If you do not have Chrome 59 (or above) installed or prefer to test with different browers, the settings for each test framework will need to be updated (see comments in `package.json`, `karma.config.js`, etc).
 
-3.  **Add SauceLabs environment variables for remote browser testing**
+3. **Add SauceLabs environment variables for remote browser testing**
 
     For remote testing on SauceLabs, be sure to set your SAUCE_USERNAME and SAUCE_ACCESS_KEY enironment variables for authentication. Details can be found on the [SauceLabs wiki](https://wiki.saucelabs.com/display/DOCS/Best+Practice%3A+Use+Environment+Variables+for+Authentication+Credentials).

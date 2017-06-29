@@ -18,7 +18,7 @@ const localConfig = {
     preprocessors: {
         [htmlFiles]: ['html2js'],
         [jsonFiles]: ['json_fixtures'],
-        [testFiles]: ['webpack', 'sourcemap'],
+        [testFiles]: ['eslint', 'webpack', 'sourcemap'],
     },
     frameworks: ['mocha', 'chai'],
     reporters: ['mocha', 'coverage'],
@@ -31,9 +31,10 @@ const localConfig = {
                 use: [{
                     loader: 'babel-loader',
                     options: {
-                        presets: ['env'],
                         plugins: [
-                            ['istanbul', { exclude: ['**/*.test.js'] }]
+                            ['istanbul', {
+                                exclude: ['**/*.test.js']
+                            }]
                         ]
                     },
                 }]
@@ -63,37 +64,66 @@ const localConfig = {
         stripPrefix: 'tests/fixtures/',
         variableName: '__json__'
     },
+    // Mocha reporter
+    // https://www.npmjs.com/package/karma-mocha-reporter
+    mochaReporter: {
+        output: 'autowatch'
+    },
     port: 9876,
     colors: true,
     autoWatch: true,
     singleRun: false,
     concurrency: Infinity
-}
+};
 
 
 // Remote config
 // =============================================================================
 const remoteConfig = Object.assign({}, localConfig, {
-    // SauceLabs browers
-    // See https://saucelabs.com/platforms for complete list
+    // SauceLabs browers (see platform configurator below)
+    // https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
     customLaunchers: {
         sl_chrome: {
             base: 'SauceLabs',
             browserName: 'chrome',
             platform: 'Windows 7',
-            version: '35'
+            version: '26'
         },
-        sl_firefox: {
-            base: 'SauceLabs',
-            browserName: 'firefox',
-            version: '30'
-        },
-        sl_ie_11: {
-            base: 'SauceLabs',
-            browserName: 'internet explorer',
-            platform: 'Windows 8.1',
-            version: '11'
-        }
+        // sl_edge: {
+        //     base: 'SauceLabs',
+        //     browserName: 'MicrosoftEdge',
+        //     platform: 'Windows 10',
+        //     version: '13.10586'
+        // },
+        // sl_firefox: {
+        //     base: 'SauceLabs',
+        //     browserName: 'firefox',
+        //     version: '30'
+        // },
+        // sl_ie_11: {
+        //     base: 'SauceLabs',
+        //     browserName: 'internet explorer',
+        //     platform: 'Windows 7',
+        //     version: '11.0'
+        // },
+        // sl_ie_10: {
+        //     base: 'SauceLabs',
+        //     browserName: 'internet explorer',
+        //     platform: 'Windows 7',
+        //     version: '10.0'
+        // },
+        // sl_ie_9: {
+        //     base: 'SauceLabs',
+        //     browserName: 'internet explorer',
+        //     platform: 'Windows 7',
+        //     version: '9.0'
+        // },
+        // sl_safari: {
+        //     base: 'SauceLabs',
+        //     browserName: 'safari',
+        //     platform: 'OS X 10.8',
+        //     version: '6.0'
+        // }
     },
     // Set browsers to all customLaunchers
     get browsers() {
@@ -101,6 +131,7 @@ const remoteConfig = Object.assign({}, localConfig, {
     },
     // Add SauceLabs reporter
     reporters: ['mocha', 'coverage', 'saucelabs'],
+    // Add SauceLab properties
     sauceLabs: {
         testName: `${pkg.name} (karma)`
     }
@@ -114,5 +145,5 @@ module.exports = function(config) {
     const testConfig = isRemote ? remoteConfig : localConfig;
 
     testConfig.logLevel = config.LOG_INFO;
-    config.set(testConfig)
-}
+    config.set(testConfig);
+};
