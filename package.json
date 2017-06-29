@@ -1,7 +1,7 @@
 {
   "name": "ci-test",
   "version": "1.0.0",
-  "description": "",
+  "description": "A collection of boilerplate code for evaluating JavaScript testing frameworks and utilities",
   "main": "index.js",
   "scripts": {
     "clean": "rimraf coverage/*",
