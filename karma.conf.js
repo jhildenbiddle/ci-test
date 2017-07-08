@@ -89,41 +89,42 @@ const remoteConfig = Object.assign({}, localConfig, {
             platform: 'Windows 7',
             version: '26'
         },
-        // sl_edge: {
-        //     base: 'SauceLabs',
-        //     browserName: 'MicrosoftEdge',
-        //     platform: 'Windows 10',
-        //     version: '13.10586'
-        // },
-        // sl_firefox: {
-        //     base: 'SauceLabs',
-        //     browserName: 'firefox',
-        //     version: '30'
-        // },
-        // sl_ie_11: {
-        //     base: 'SauceLabs',
-        //     browserName: 'internet explorer',
-        //     platform: 'Windows 7',
-        //     version: '11.0'
-        // },
-        // sl_ie_10: {
-        //     base: 'SauceLabs',
-        //     browserName: 'internet explorer',
-        //     platform: 'Windows 7',
-        //     version: '10.0'
-        // },
-        // sl_ie_9: {
-        //     base: 'SauceLabs',
-        //     browserName: 'internet explorer',
-        //     platform: 'Windows 7',
-        //     version: '9.0'
-        // },
-        // sl_safari: {
-        //     base: 'SauceLabs',
-        //     browserName: 'safari',
-        //     platform: 'OS X 10.8',
-        //     version: '6.0'
-        // }
+        sl_edge: {
+            base: 'SauceLabs',
+            browserName: 'MicrosoftEdge',
+            platform: 'Windows 10',
+            version: '13.10586'
+        },
+        sl_firefox: {
+            base: 'SauceLabs',
+            browserName: 'firefox',
+            platform: 'Windows 7',
+            version: '30'
+        },
+        sl_ie_11: {
+            base: 'SauceLabs',
+            browserName: 'internet explorer',
+            platform: 'Windows 7',
+            version: '11.0'
+        },
+        sl_ie_10: {
+            base: 'SauceLabs',
+            browserName: 'internet explorer',
+            platform: 'Windows 7',
+            version: '10.0'
+        },
+        sl_ie_9: {
+            base: 'SauceLabs',
+            browserName: 'internet explorer',
+            platform: 'Windows 7',
+            version: '9.0'
+        },
+        sl_safari: {
+            base: 'SauceLabs',
+            browserName: 'safari',
+            platform: 'OS X 10.9',
+            version: '7.0'
+        }
     },
     // Set browsers to all customLaunchers
     get browsers() {
@@ -143,6 +144,13 @@ const remoteConfig = Object.assign({}, localConfig, {
 module.exports = function(config) {
     const isRemote   = Boolean(process.argv.indexOf('--remote') > -1);
     const testConfig = isRemote ? remoteConfig : localConfig;
+
+    if (isRemote) {
+        // Disabled source maps to prevent SauceLabs timeouts
+        // https://github.com/karma-runner/karma-sauce-launcher/issues/95
+        testConfig.webpack.devtool = '';
+        testConfig.webpack.module.rules[0].use[0].options.sourceMap = false;
+    }
 
     testConfig.logLevel = config.LOG_INFO;
     config.set(testConfig);
