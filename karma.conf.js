@@ -1,7 +1,16 @@
-const htmlFiles = './tests/fixtures/*.html';
-const jsonFiles = './tests/fixtures/*.json';
-const testFiles = './tests/karma/*.test.js';
+// Dependencies
+// =============================================================================
 const pkg       = require('./package');
+const saucelabs = require('./saucelabs.config');
+
+
+// Constants & Variables
+// =============================================================================
+const files = {
+    html: './tests/fixtures/*.html',
+    json: './tests/fixtures/*.json',
+    test: './tests/karma/*.test.js'
+};
 
 
 // Local config
@@ -9,28 +18,37 @@ const pkg       = require('./package');
 const localConfig = {
     // Add browsers via Karma launchers
     // https://www.npmjs.com/search?q=karma+launcher
-    browsers: ['ChromeHeadless'],
+    browsers: [
+        'ChromeHeadless'
+    ],
     files: [
-        htmlFiles,
-        jsonFiles,
-        testFiles
+        files.html,
+        files.json,
+        files.test
     ],
     preprocessors: {
-        [htmlFiles]: ['html2js'],
-        [jsonFiles]: ['json_fixtures'],
-        [testFiles]: ['eslint', 'webpack', 'sourcemap'],
+        [files.html]: ['html2js'],
+        [files.json]: ['json_fixtures'],
+        [files.test]: ['eslint', 'webpack', 'sourcemap']
     },
     frameworks: ['mocha', 'chai'],
-    reporters: ['mocha', 'coverage'],
-    webpack: {
+    reporters : ['mocha', 'coverage'],
+    webpack   : {
         devtool: 'inline-source-map',
         module: {
             rules: [{
-                test: /\.js$/,
+                test   : /\.js$/,
                 exclude: [/node_modules/],
-                use: [{
+                use    : [{
                     loader: 'babel-loader',
                     options: {
+                        presets: [
+                            ['env', {
+                                targets: {
+                                    browsers: ['ie >= 9']
+                                }
+                            }]
+                        ],
                         plugins: [
                             ['istanbul', {
                                 exclude: ['**/*.test.js']
@@ -61,7 +79,7 @@ const localConfig = {
     // JSON Fixtures
     // https://www.npmjs.com/package/karma-json-fixtures-preprocessor
     jsonFixturesPreprocessor: {
-        stripPrefix: 'tests/fixtures/',
+        stripPrefix : 'tests/fixtures/',
         variableName: '__json__'
     },
     // Mocha reporter
@@ -69,10 +87,10 @@ const localConfig = {
     mochaReporter: {
         output: 'autowatch'
     },
-    port: 9876,
-    colors: true,
-    autoWatch: true,
-    singleRun: false,
+    port       : 9876,
+    colors     : true,
+    autoWatch  : false,
+    singleRun  : true,
     concurrency: Infinity
 };
 
@@ -84,57 +102,58 @@ const remoteConfig = Object.assign({}, localConfig, {
     // https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
     customLaunchers: {
         sl_chrome: {
-            base: 'SauceLabs',
-            browserName: 'chrome',
-            platform: 'Windows 7',
-            version: '26'
+            base       : 'SauceLabs',
+            browserName: 'Chrome',
+            platform   : 'Windows 10',
+            version    : '26.0'
         },
         sl_edge: {
-            base: 'SauceLabs',
+            base       : 'SauceLabs',
             browserName: 'MicrosoftEdge',
-            platform: 'Windows 10',
-            version: '13.10586'
+            platform   : 'Windows 10',
+            version    : '13.10586'
         },
         sl_firefox: {
-            base: 'SauceLabs',
-            browserName: 'firefox',
-            platform: 'Windows 7',
-            version: '30'
+            base       : 'SauceLabs',
+            browserName: 'Firefox',
+            platform   : 'Windows 10',
+            version    : '30'
         },
         sl_ie_11: {
-            base: 'SauceLabs',
-            browserName: 'internet explorer',
-            platform: 'Windows 7',
-            version: '11.0'
+            base       : 'SauceLabs',
+            browserName: 'Internet Explorer',
+            platform   : 'Windows 10',
+            version    : '11.0'
         },
         sl_ie_10: {
-            base: 'SauceLabs',
-            browserName: 'internet explorer',
-            platform: 'Windows 7',
-            version: '10.0'
+            base       : 'SauceLabs',
+            browserName: 'Internet Explorer',
+            platform   : 'Windows 8',
+            version    : '10.0'
         },
         sl_ie_9: {
-            base: 'SauceLabs',
-            browserName: 'internet explorer',
-            platform: 'Windows 7',
-            version: '9.0'
+            base       : 'SauceLabs',
+            browserName: 'Internet Explorer',
+            platform   : 'Windows 7',
+            version    : '9.0'
         },
         sl_safari: {
-            base: 'SauceLabs',
-            browserName: 'safari',
-            platform: 'OS X 10.9',
-            version: '7.0'
+            base       : 'SauceLabs',
+            browserName: 'Safari',
+            platform   : 'OS X 10.9',
+            version    : '7.0'
         }
     },
     // Set browsers to all customLaunchers
     get browsers() {
         return Object.keys(this.customLaunchers);
     },
-    // Add SauceLabs reporter
-    reporters: ['mocha', 'coverage', 'saucelabs'],
-    // Add SauceLab properties
+    // SauceLab settings
     sauceLabs: {
-        testName: `${pkg.name} (karma)`
+        username : saucelabs.username || process.env.SAUCE_USERNAME,
+        accessKey: saucelabs.accessKey || process.env.SAUCE_ACCESS_KEY,
+        testName : `${pkg.name} (karma)`,
+        build    : process.env.TRAVIS_JOB_ID || 0
     }
 });
 
@@ -150,6 +169,12 @@ module.exports = function(config) {
         // https://github.com/karma-runner/karma-sauce-launcher/issues/95
         testConfig.webpack.devtool = '';
         testConfig.webpack.module.rules[0].use[0].options.sourceMap = false;
+
+        // Add SauceLabs reporter
+        testConfig.reporters.push('saucelabs');
+
+        // Remove text-summary reporter
+        testConfig.coverageReporter.reporters = testConfig.coverageReporter.reporters.filter(obj => obj.type !== 'text-summary');
     }
 
     testConfig.logLevel = config.LOG_INFO;

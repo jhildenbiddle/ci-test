@@ -35,6 +35,9 @@ Sample code used for evaluating JavaScript testing frameworks:
 # Clone repo
 git clone https://github.com/jhildenbiddle/ci-test.git
 
+# Change to cloned repo directory
+cd ci-test
+
 # Install dependencies
 npm install
 
@@ -42,6 +45,7 @@ npm install
 npm run test:cafe
 npm run test:jest
 npm run test:karma
+npm run test:karma-debug
 
 # Run remote tests (see "Notes" below)
 npm run test:cafe-remote
@@ -56,8 +60,15 @@ npm run test:karma-remote
 
 2. **Install Chrome 59+ for "headless" browser testing**
 
-    Local tests are configured to use Chrome in "headless" mode by default. This requires Chrome 59 or above. If you do not have Chrome 59 (or above) installed or prefer to test with different browers, the settings for each test framework will need to be updated (see comments in `package.json`, `karma.config.js`, etc).
+    Local tests are configured to use Chrome in "headless" mode by default. This requires Chrome 59 or above. If you do not have Chrome 59 (or above) installed or prefer to test with different browers, the settings for each test framework will need to be updated:
 
-3. **Add SauceLabs environment variables for remote browser testing**
+    *   **Jest**: No browers to specify (test are executed using [jsdom](https://github.com/tmpvar/jsdom))
+    *   **Karma**: edit `karma.conf.js` and install the appropriate [karma launchers](https://www.npmjs.com/search?q=karma+launcher)
+    *   **TestCafé**: edit `package.json` and specify browsers via command line args
 
-    For remote testing on SauceLabs, be sure to set your SAUCE_USERNAME and SAUCE_ACCESS_KEY enironment variables for authentication. Details can be found on the [SauceLabs wiki](https://wiki.saucelabs.com/display/DOCS/Best+Practice%3A+Use+Environment+Variables+for+Authentication+Credentials).
+3. **Set SauceLabs username and access key for remote testing**
+
+    Set your username and access key as environment variables (SAUCE_USERNAME and SAUCE_ACCESS_KEY) or in `saucelabs.config.js`. Information on setting environment variables can be found on the [SauceLabs wiki](https://wiki.saucelabs.com/display/DOCS/Best+Practice%3A+Use+Environment+Variables+for+Authentication+Credentials).
+
+    ​
+
