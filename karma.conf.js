@@ -152,8 +152,7 @@ const remoteConfig = Object.assign({}, localConfig, {
     sauceLabs: {
         username : saucelabs.username || process.env.SAUCE_USERNAME,
         accessKey: saucelabs.accessKey || process.env.SAUCE_ACCESS_KEY,
-        testName : `${pkg.name} (karma)`,
-        build    : process.env.TRAVIS_BUILD_NUMBER || 0
+        testName : `${pkg.name} (karma)`
     }
 });
 
@@ -176,14 +175,6 @@ module.exports = function(config) {
         // Remove text-summary reporter
         testConfig.coverageReporter.reporters = testConfig.coverageReporter.reporters.filter(obj => obj.type !== 'text-summary');
     }
-
-    // eslint-disable-next-line
-    console.log({
-        TRAVIS_BUILD_ID    : process.env.TRAVIS_BUILD_ID,
-        TRAVIS_BUILD_NUMBER: process.env.TRAVIS_BUILD_NUMBER,
-        TRAVIS_JOB_ID      : process.env.TRAVIS_JOB_ID,
-        TRAVIS_JOB_NUMBER  : process.env.TRAVIS_JOB_NUMBER
-    });
 
     testConfig.logLevel = config.LOG_INFO;
     config.set(testConfig);
