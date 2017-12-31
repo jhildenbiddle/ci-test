@@ -1,6 +1,6 @@
 {
   "name": "ci-test",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A collection of boilerplate code for evaluating JavaScript testing frameworks and utilities",
   "author": "John Hildenbiddle <http://hildenbiddle.com>",
   "license": "MIT",
