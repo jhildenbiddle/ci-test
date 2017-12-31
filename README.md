@@ -1,9 +1,9 @@
+# ci-test
+
 [![Build Status](https://img.shields.io/travis/jhildenbiddle/ci-test.svg?style=flat-square)](https://travis-ci.org/jhildenbiddle/ci-test)
 [![Codecov](https://img.shields.io/codecov/c/github/jhildenbiddle/ci-test.svg?style=flat-square)](https://codecov.io/gh/jhildenbiddle/ci-test)
 [![Codacy grade](https://img.shields.io/codacy/grade/ec212742ff4d4af19a959cae2018565b.svg?style=flat-square)](https://www.codacy.com/app/jhildenbiddle/ci-test?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jhildenbiddle/ci-test&amp;utm_campaign=Badge_Grade)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
-
-# ci-test
 
 Sample code used for evaluating JavaScript testing frameworks:
 
